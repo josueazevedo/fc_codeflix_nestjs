@@ -25,4 +25,4 @@ jobs:
     - name: Install
       run: npm i
     - name: Test
-      run: npx run test
+      run: npm run test
