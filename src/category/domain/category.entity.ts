@@ -24,7 +24,7 @@ export class Category extends Entity {
   is_active: boolean;
   created_at: Date;
 
-  private constructor(props: CategoryConstructorProps) {
+  public constructor(props: CategoryConstructorProps) {
     super();
     this.category_id = props.category_id;
     this.name = props.name;
