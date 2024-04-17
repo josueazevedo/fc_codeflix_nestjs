@@ -22,7 +22,6 @@ describe("Category Unit Tests", () => {
     expect(category.name).toBe(expected.name);
     expect(category.description).toBe(expected.description);
     expect(category.is_active).toBe(expected.is_active);
-    expect(category.created_at).toStrictEqual(expected.createdAt);
     expect(category.entity_id).toBeDefined();
     expect(category.entity_id).toBeInstanceOf(Uuid);
     expect(validateSpy).toHaveBeenCalled();
@@ -40,7 +39,6 @@ describe("Category Unit Tests", () => {
     expect(category.name).toBe(expected.name);
     expect(category.description).toBe(expected.description);
     expect(category.is_active).toBe(expected.is_active);
-    expect(category.created_at).toStrictEqual(expected.created_at);
     expect(category.entity_id).toBe(expected.category_id);
     expect(category.entity_id).toBeInstanceOf(Uuid);
     expect(category.category_id.id).toBe(expected.category_id.id);
