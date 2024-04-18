@@ -15,6 +15,7 @@ export type CategoryCreateCommand = {
   name: string;
   description?: string | null;
   is_active?: boolean;
+  created_at?: Date;
 };
 
 export class Category extends Entity {
@@ -39,7 +40,7 @@ export class Category extends Entity {
       name: props.name,
       description: props.description ?? null,
       is_active: props.is_active ?? true,
-      created_at: new Date(),
+      created_at: props.created_at ?? new Date(),
     });
     Category.validate(entity);
     return entity;
