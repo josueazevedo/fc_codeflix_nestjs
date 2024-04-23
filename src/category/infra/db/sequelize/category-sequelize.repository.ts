@@ -1,7 +1,4 @@
 import { Op } from "sequelize";
-import { Entity } from "../../../../shared/domain/entity";
-import { SearchParams } from "../../../../shared/domain/repository/search-params";
-import { SearchResult } from "../../../../shared/domain/repository/search-result";
 import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../../../domain/category.entity";
 import {
@@ -10,6 +7,7 @@ import {
   ICategoryRepository,
 } from "../../../domain/category.repository";
 import { CategoryModel } from "./category.model";
+import { NotFoundError } from "../../../../shared/domain/erros/not-found.error";
 
 export class CategorySequelizeRepository implements ICategoryRepository {
   sortableFields: string[] = ["name", "created_at"];
@@ -29,7 +27,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
   async update(entity: Category): Promise<void> {
     const model = await this.categoryModel.findByPk(entity.category_id.id);
     if (!model) {
-      throw new Error("Entity not found");
+      throw new NotFoundError(entity.category_id.id, this.getEntity());
     }
     await model.update(this.categoryModel.from(entity).toJSON());
   }
@@ -37,7 +35,7 @@ export class CategorySequelizeRepository implements ICategoryRepository {
   async delete(entity_id: Uuid): Promise<void> {
     const model = await this.categoryModel.findByPk(entity_id.id);
     if (!model) {
-      throw new Error("Entity not found");
+      throw new NotFoundError(entity_id.id, this.getEntity());
     }
     await model.destroy();
   }

@@ -21,6 +21,7 @@ describe("Value Object", () => {
     expect(vo2.equals(vo1)).toBeFalsy();
     expect(vo1.equals(vo2)).toBeFalsy();
     expect(vo2.equals(vo2)).toBeTruthy();
+    expect(vo1.equals(null)).toBeFalsy();
   });
 
   it("should not be equals if type is different", () => {
