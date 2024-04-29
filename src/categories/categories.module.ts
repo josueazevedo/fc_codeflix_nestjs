@@ -5,9 +5,7 @@ import { CategoryModel } from 'src/core/category/infra/db/sequelize/category.mod
 import { CategorySequelizeRepository } from 'src/core/category/infra/db/sequelize/category-sequelize.repository';
 
 @Module({
-  imports: [
-    SequelizeModule.forFeature([CategoryModel])
-  ],
+  imports: [SequelizeModule.forFeature([CategoryModel])],
   controllers: [CategoriesController],
   providers: [
     {
@@ -15,8 +13,8 @@ import { CategorySequelizeRepository } from 'src/core/category/infra/db/sequeliz
       useFactory: (categoryModel: typeof CategoryModel) => {
         return new CategorySequelizeRepository(categoryModel);
       },
-      inject: [getModelToken(CategoryModel)]
-    }
-  ]
+      inject: [getModelToken(CategoryModel)],
+    },
+  ],
 })
 export class CategoriesModule {}
