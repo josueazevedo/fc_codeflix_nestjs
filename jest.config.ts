@@ -3,7 +3,7 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type { Config } from "jest";
+import type { Config } from 'jest';
 
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
@@ -29,13 +29,13 @@ const config: Config = {
 
   // An array of regexp pattern strings used to skip coverage collection
   coveragePathIgnorePatterns: [
-    "/node_modules/",
-    "\\.model\\.ts$",
-    "\\.error\\.ts$",
+    '/node_modules/',
+    '\\.model\\.ts$',
+    '\\.error\\.ts$',
   ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
+  coverageProvider: 'v8',
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -205,21 +205,15 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-  moduleFileExtensions: [
-    "js",
-    "json",
-    "ts"
-  ],
-  rootDir: "src",
-  testRegex: ".*\\.spec\\.ts$",
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  rootDir: 'src',
+  testRegex: ['.*\\.spec\\.ts$', '.*\\.test\\.ts$'],
   transform: {
-    "^.+\\.(t|j)s$": "@swc/jest"
+    '^.+\\.(t|j)s$': '@swc/jest',
   },
-  collectCoverageFrom: [
-    "**/*.(t|j)s"
-  ],
-  coverageDirectory: "../coverage",
-  testEnvironment: "node"
+  collectCoverageFrom: ['**/*.(t|j)s'],
+  coverageDirectory: '../coverage',
+  testEnvironment: 'node',
 };
 
 export default config;
