@@ -1,21 +1,21 @@
-import { ICategoryRepository } from "../../../domain/category.repository";
-import { CategoryInMemoryRepository } from "../../../infra/db/in-memory/category-in-memory.repository";
-import { CreateCatetoryUseCase } from "../../create-category.usecase";
+import { ICategoryRepository } from '../../../domain/category.repository';
+import { CategoryInMemoryRepository } from '../../../infra/db/in-memory/category-in-memory.repository';
+import { CreateCategoryUseCase } from '../../create-category.usecase';
 
-describe("Create Category Usecase unit test", () => {
-  let useCase: CreateCatetoryUseCase;
+describe('Create Category Usecase unit test', () => {
+  let useCase: CreateCategoryUseCase;
   let repository: ICategoryRepository;
 
   beforeEach(() => {
     repository = new CategoryInMemoryRepository();
-    useCase = new CreateCatetoryUseCase(repository);
+    useCase = new CreateCategoryUseCase(repository);
   });
 
-  it("should create a category", async () => {
-    const spyInsert = jest.spyOn(repository, "insert");
+  it('should create a category', async () => {
+    const spyInsert = jest.spyOn(repository, 'insert');
 
     const input = {
-      name: "Movie",
+      name: 'Movie',
     };
 
     const output = await useCase.execute(input);
@@ -26,10 +26,10 @@ describe("Create Category Usecase unit test", () => {
     expect(output.name).toBe(input.name);
   });
 
-  it("should create a category with full data", async () => {
+  it('should create a category with full data', async () => {
     const input = {
-      name: "Movie",
-      description: "some description",
+      name: 'Movie',
+      description: 'some description',
       is_active: false,
     };
 

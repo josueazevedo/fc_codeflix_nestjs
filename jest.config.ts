@@ -32,6 +32,12 @@ const config: Config = {
     '/node_modules/',
     '\\.model\\.ts$',
     '\\.error\\.ts$',
+    '\\.module\\.ts$',
+    '\\.interface\\.ts$',
+    '\\.dto\\.ts$',
+    '\\.providers\\.ts$',
+    'main.ts',
+    'config.ts',
   ],
 
   // Indicates which provider should be used to instrument code for coverage

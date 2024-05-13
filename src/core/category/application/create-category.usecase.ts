@@ -1,8 +1,8 @@
-import { IUseCase } from "../../shared/application/use-case.interface";
-import { Category } from "../domain/category.entity";
-import { ICategoryRepository } from "../domain/category.repository";
+import { IUseCase } from '../../shared/application/use-case.interface';
+import { Category } from '../domain/category.aggregate';
+import { ICategoryRepository } from '../domain/category.repository';
 
-export class CreateCatetoryUseCase
+export class CreateCategoryUseCase
   implements IUseCase<CreateCategoryInput, CreateCategoryOutput>
 {
   constructor(private categoryRepository: ICategoryRepository) {}

@@ -1,11 +1,11 @@
-import { setupSequelize } from "../../../../shared/infra/testing/setup-db";
-import { Category } from "../../../domain/category.entity";
-import { ICategoryRepository } from "../../../domain/category.repository";
-import { CategorySequelizeRepository } from "../../../infra/db/sequelize/category-sequelize.repository";
-import { CategoryModel } from "../../../infra/db/sequelize/category.model";
-import { ListCategoriesUseCase } from "../../list-category.usecase";
+import { setupSequelize } from '../../../../shared/infra/testing/setup-db';
+import { Category } from '../../../domain/category.aggregate';
+import { ICategoryRepository } from '../../../domain/category.repository';
+import { CategorySequelizeRepository } from '../../../infra/db/sequelize/category-sequelize.repository';
+import { CategoryModel } from '../../../infra/db/sequelize/category.model';
+import { ListCategoriesUseCase } from '../../list-category.usecase';
 
-describe("ListCategoriesUseCase Unit Tests", () => {
+describe('ListCategoriesUseCase Unit Tests', () => {
   let useCase: ListCategoriesUseCase;
   let repository: ICategoryRepository;
 
@@ -16,7 +16,7 @@ describe("ListCategoriesUseCase Unit Tests", () => {
     useCase = new ListCategoriesUseCase(repository);
   });
 
-  it("should return empty items with default search params", async () => {
+  it('should return empty items with default search params', async () => {
     const output = await useCase.execute({});
     expect(output).toStrictEqual({
       items: [],
@@ -27,11 +27,11 @@ describe("ListCategoriesUseCase Unit Tests", () => {
     });
   });
 
-  it("should return output sorted by created_at when input param is empty", async () => {
+  it('should return output sorted by created_at when input param is empty', async () => {
     const items = [
-      Category.create({ name: "test 1" }),
+      Category.create({ name: 'test 1' }),
       Category.create({
-        name: "test 2",
+        name: 'test 2',
         created_at: new Date(new Date().getTime() + 100),
       }),
     ];
@@ -53,20 +53,20 @@ describe("ListCategoriesUseCase Unit Tests", () => {
     });
   });
 
-  it("should return output using pagination, sort and filter", async () => {
+  it('should return output using pagination, sort and filter', async () => {
     const items = [
-      Category.create({ name: "a" }),
+      Category.create({ name: 'a' }),
       Category.create({
-        name: "AAA",
+        name: 'AAA',
       }),
       Category.create({
-        name: "AaA",
+        name: 'AaA',
       }),
       Category.create({
-        name: "b",
+        name: 'b',
       }),
       Category.create({
-        name: "c",
+        name: 'c',
       }),
     ];
 
@@ -75,8 +75,8 @@ describe("ListCategoriesUseCase Unit Tests", () => {
     let output = await useCase.execute({
       page: 1,
       per_page: 2,
-      sort: "name",
-      filter: "a",
+      sort: 'name',
+      filter: 'a',
     });
     expect(output).toStrictEqual({
       items: [items[1], items[2]].map((i) => ({
@@ -95,8 +95,8 @@ describe("ListCategoriesUseCase Unit Tests", () => {
     output = await useCase.execute({
       page: 2,
       per_page: 2,
-      sort: "name",
-      filter: "a",
+      sort: 'name',
+      filter: 'a',
     });
     expect(output).toStrictEqual({
       items: [items[0]].map((i) => ({
@@ -115,9 +115,9 @@ describe("ListCategoriesUseCase Unit Tests", () => {
     output = await useCase.execute({
       page: 1,
       per_page: 2,
-      sort: "name",
-      sort_dir: "desc",
-      filter: "a",
+      sort: 'name',
+      sort_dir: 'desc',
+      filter: 'a',
     });
     expect(output).toStrictEqual({
       items: [items[0], items[2]].map((i) => ({
