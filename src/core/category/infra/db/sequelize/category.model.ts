@@ -4,9 +4,9 @@ import {
   Model,
   PrimaryKey,
   Table,
-} from "sequelize-typescript";
-import { Category } from "../../../domain/category.entity";
-import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
+} from 'sequelize-typescript';
+import { Category } from '../../../domain/category.aggregate';
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
 
 export type CategoryModelProps = {
   category_id: string;
@@ -16,7 +16,7 @@ export type CategoryModelProps = {
   created_at: Date;
 };
 
-@Table({ tableName: "categories", timestamps: false })
+@Table({ tableName: 'categories', timestamps: false })
 export class CategoryModel extends Model<CategoryModelProps> {
   @PrimaryKey
   @Column({ type: DataType.UUID })

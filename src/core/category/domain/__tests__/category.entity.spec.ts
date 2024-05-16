@@ -1,16 +1,16 @@
-import { Uuid } from "../../../shared/domain/value-objects/uuid.vo";
-import { Category } from "../category.entity";
+import { Uuid } from '../../../shared/domain/value-objects/uuid.vo';
+import { Category } from '../category.aggregate';
 
-describe("Category Unit Tests", () => {
+describe('Category Unit Tests', () => {
   let validateSpy: any;
 
   beforeEach(() => {
-    validateSpy = jest.spyOn(Category, "validate");
+    validateSpy = jest.spyOn(Category, 'validate');
   });
-  it("should create a category", () => {
+  it('should create a category', () => {
     const expected = {
-      name: "Movie",
-      description: "some description",
+      name: 'Movie',
+      description: 'some description',
       is_active: true,
       createdAt: new Date(),
     };
@@ -27,11 +27,11 @@ describe("Category Unit Tests", () => {
     expect(validateSpy).toHaveBeenCalled();
   });
 
-  it("should create a existing category", () => {
+  it('should create a existing category', () => {
     const expected = {
-      category_id: Uuid.from("7cdbd1c4-a0c5-40fd-a284-07a75c85bcff"),
-      name: "Movie",
-      description: "some description",
+      category_id: Uuid.from('7cdbd1c4-a0c5-40fd-a284-07a75c85bcff'),
+      name: 'Movie',
+      description: 'some description',
       is_active: true,
       created_at: new Date(),
     };
@@ -45,10 +45,10 @@ describe("Category Unit Tests", () => {
     expect(validateSpy).toHaveBeenCalled();
   });
 
-  it("should activate category", () => {
+  it('should activate category', () => {
     const category = Category.create({
-      name: "Movie",
-      description: "some description",
+      name: 'Movie',
+      description: 'some description',
       is_active: false,
     });
     category.activate();
@@ -56,10 +56,10 @@ describe("Category Unit Tests", () => {
     expect(validateSpy).toHaveBeenCalled();
   });
 
-  it("should deactivate category", () => {
+  it('should deactivate category', () => {
     const category = Category.create({
-      name: "Movie",
-      description: "some description",
+      name: 'Movie',
+      description: 'some description',
       is_active: true,
     });
     category.deactivate();
@@ -67,47 +67,47 @@ describe("Category Unit Tests", () => {
     expect(validateSpy).toHaveBeenCalled();
   });
 
-  it("should change name", () => {
+  it('should change name', () => {
     const category = Category.create({
-      name: "Movie",
-      description: "some description",
+      name: 'Movie',
+      description: 'some description',
       is_active: true,
     });
-    category.changeName("Movie 2");
-    expect(category.name).toBe("Movie 2");
+    category.changeName('Movie 2');
+    expect(category.name).toBe('Movie 2');
     expect(validateSpy).toHaveBeenCalled();
   });
 
-  it("should change description", () => {
+  it('should change description', () => {
     const category = Category.create({
-      name: "Movie",
-      description: "some description",
+      name: 'Movie',
+      description: 'some description',
       is_active: true,
     });
-    category.changeDescription("some description 2");
-    expect(category.description).toBe("some description 2");
+    category.changeDescription('some description 2');
+    expect(category.description).toBe('some description 2');
     expect(validateSpy).toHaveBeenCalled();
   });
 
-  it("should return category in JSON", () => {
+  it('should return category in JSON', () => {
     const category = Category.create({
-      name: "Movie",
-      description: "some description",
+      name: 'Movie',
+      description: 'some description',
       is_active: true,
     });
     expect(category.toJSON()).toStrictEqual({
       category_id: category.entity_id.id,
-      name: "Movie",
-      description: "some description",
+      name: 'Movie',
+      description: 'some description',
       is_active: true,
       created_at: category.created_at,
     });
     expect(validateSpy).toHaveBeenCalled();
   });
 
-  it("should create category with default values", () => {
+  it('should create category with default values', () => {
     const category = Category.create({
-      name: "Movie",
+      name: 'Movie',
     });
     expect(category.is_active).toBeTruthy();
     expect(category.description).toBeNull();
@@ -117,12 +117,12 @@ describe("Category Unit Tests", () => {
     expect(validateSpy).toHaveBeenCalled();
   });
 
-  it("should throw error when name is empty", () => {
+  it('should throw error when name is empty', () => {
     expect(() => {
       Category.create({
-        name: "",
+        name: '',
       });
-    }).toThrow("Validation Error");
+    }).toThrow('Validation Error');
     expect(validateSpy).toHaveBeenCalled();
   });
 });

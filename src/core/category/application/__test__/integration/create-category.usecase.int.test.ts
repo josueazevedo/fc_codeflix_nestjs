@@ -1,24 +1,24 @@
-import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
-import { setupSequelize } from "../../../../shared/infra/testing/setup-db";
-import { ICategoryRepository } from "../../../domain/category.repository";
-import { CategorySequelizeRepository } from "../../../infra/db/sequelize/category-sequelize.repository";
-import { CategoryModel } from "../../../infra/db/sequelize/category.model";
-import { CreateCatetoryUseCase } from "../../create-category.usecase";
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
+import { setupSequelize } from '../../../../shared/infra/testing/setup-db';
+import { ICategoryRepository } from '../../../domain/category.repository';
+import { CategorySequelizeRepository } from '../../../infra/db/sequelize/category-sequelize.repository';
+import { CategoryModel } from '../../../infra/db/sequelize/category.model';
+import { CreateCategoryUseCase } from '../../create-category.usecase';
 
-describe("Create Category UseCase Integration test", () => {
-  let useCase: CreateCatetoryUseCase;
+describe('Create Category UseCase Integration test', () => {
+  let useCase: CreateCategoryUseCase;
   let repository: ICategoryRepository;
 
   setupSequelize({ models: [CategoryModel] });
 
   beforeEach(() => {
     repository = new CategorySequelizeRepository(CategoryModel);
-    useCase = new CreateCatetoryUseCase(repository);
+    useCase = new CreateCategoryUseCase(repository);
   });
 
-  it("should create a category", async () => {
+  it('should create a category', async () => {
     const input = {
-      name: "Movie",
+      name: 'Movie',
     };
     const output = await useCase.execute(input);
     const entity = await repository.findById(Uuid.from(output.id));
@@ -31,10 +31,10 @@ describe("Create Category UseCase Integration test", () => {
     });
   });
 
-  it("should create a category with full data", async () => {
+  it('should create a category with full data', async () => {
     const input = {
-      name: "Movie",
-      description: "some description",
+      name: 'Movie',
+      description: 'some description',
       is_active: false,
     };
     const output = await useCase.execute(input);

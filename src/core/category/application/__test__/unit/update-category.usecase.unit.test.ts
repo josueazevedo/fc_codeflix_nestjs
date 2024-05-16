@@ -1,10 +1,10 @@
-import { NotFoundError } from "../../../../shared/domain/erros/not-found.error";
-import { Category } from "../../../domain/category.entity";
-import { ICategoryRepository } from "../../../domain/category.repository";
-import { CategoryInMemoryRepository } from "../../../infra/db/in-memory/category-in-memory.repository";
-import { UpdateCategoryUseCase } from "../../update-category.usecase";
+import { NotFoundError } from '../../../../shared/domain/erros/not-found.error';
+import { Category } from '../../../domain/category.aggregate';
+import { ICategoryRepository } from '../../../domain/category.repository';
+import { CategoryInMemoryRepository } from '../../../infra/db/in-memory/category-in-memory.repository';
+import { UpdateCategoryUseCase } from '../../update-category.usecase';
 
-describe("Update Category Usecase Unit Test", () => {
+describe('Update Category Usecase Unit Test', () => {
   let useCase: UpdateCategoryUseCase;
   let repository: ICategoryRepository;
 
@@ -13,13 +13,13 @@ describe("Update Category Usecase Unit Test", () => {
     useCase = new UpdateCategoryUseCase(repository);
   });
 
-  it("should thows error if category not found", async () => {
-    const spyUpdate = jest.spyOn(repository, "update");
+  it('should thows error if category not found', async () => {
+    const spyUpdate = jest.spyOn(repository, 'update');
 
     const input = {
-      id: "afedde72-6d85-4e33-b12d-611d8c7c7fab",
-      name: "Category Test",
-      description: "Category Description Test",
+      id: 'afedde72-6d85-4e33-b12d-611d8c7c7fab',
+      name: 'Category Test',
+      description: 'Category Description Test',
       is_active: true,
     };
 
@@ -30,15 +30,15 @@ describe("Update Category Usecase Unit Test", () => {
     expect(spyUpdate).toHaveBeenCalledTimes(0);
   });
 
-  it("should update a category", async () => {
-    const spyUpdate = jest.spyOn(repository, "update");
+  it('should update a category', async () => {
+    const spyUpdate = jest.spyOn(repository, 'update');
 
     const entity = Category.fake().aCategory().build();
 
     await repository.insert(entity);
 
-    const expectName = "New Category Name";
-    const expectDescription = "New Category Description";
+    const expectName = 'New Category Name';
+    const expectDescription = 'New Category Description';
     const expectIsActive = !entity.is_active;
 
     const input = {
@@ -60,19 +60,19 @@ describe("Update Category Usecase Unit Test", () => {
     });
   });
 
-  it("should update a category", async () => {
-    const spyUpdate = jest.spyOn(repository, "update");
-    const entity = Category.create({ name: "Movie" });
+  it('should update a category', async () => {
+    const spyUpdate = jest.spyOn(repository, 'update');
+    const entity = Category.create({ name: 'Movie' });
     (repository as any).items = [entity];
 
     let output = await useCase.execute({
       id: entity.category_id.id,
-      name: "test",
+      name: 'test',
     });
     expect(spyUpdate).toHaveBeenCalledTimes(1);
     expect(output).toStrictEqual({
       id: entity.category_id.id,
-      name: "test",
+      name: 'test',
       description: null,
       is_active: true,
       created_at: entity.created_at,
@@ -97,13 +97,13 @@ describe("Update Category Usecase Unit Test", () => {
       {
         input: {
           id: entity.category_id.id,
-          name: "test",
-          description: "some description",
+          name: 'test',
+          description: 'some description',
         },
         expected: {
           id: entity.category_id.id,
-          name: "test",
-          description: "some description",
+          name: 'test',
+          description: 'some description',
           is_active: true,
           created_at: entity.created_at,
         },
@@ -111,12 +111,12 @@ describe("Update Category Usecase Unit Test", () => {
       {
         input: {
           id: entity.category_id.id,
-          name: "test",
+          name: 'test',
         },
         expected: {
           id: entity.category_id.id,
-          name: "test",
-          description: "some description",
+          name: 'test',
+          description: 'some description',
           is_active: true,
           created_at: entity.created_at,
         },
@@ -124,13 +124,13 @@ describe("Update Category Usecase Unit Test", () => {
       {
         input: {
           id: entity.category_id.id,
-          name: "test",
+          name: 'test',
           is_active: false,
         },
         expected: {
           id: entity.category_id.id,
-          name: "test",
-          description: "some description",
+          name: 'test',
+          description: 'some description',
           is_active: false,
           created_at: entity.created_at,
         },
@@ -138,12 +138,12 @@ describe("Update Category Usecase Unit Test", () => {
       {
         input: {
           id: entity.category_id.id,
-          name: "test",
+          name: 'test',
         },
         expected: {
           id: entity.category_id.id,
-          name: "test",
-          description: "some description",
+          name: 'test',
+          description: 'some description',
           is_active: false,
           created_at: entity.created_at,
         },
@@ -151,13 +151,13 @@ describe("Update Category Usecase Unit Test", () => {
       {
         input: {
           id: entity.category_id.id,
-          name: "test",
+          name: 'test',
           is_active: true,
         },
         expected: {
           id: entity.category_id.id,
-          name: "test",
-          description: "some description",
+          name: 'test',
+          description: 'some description',
           is_active: true,
           created_at: entity.created_at,
         },
@@ -165,14 +165,14 @@ describe("Update Category Usecase Unit Test", () => {
       {
         input: {
           id: entity.category_id.id,
-          name: "test",
-          description: "some description",
+          name: 'test',
+          description: 'some description',
           is_active: false,
         },
         expected: {
           id: entity.category_id.id,
-          name: "test",
-          description: "some description",
+          name: 'test',
+          description: 'some description',
           is_active: false,
           created_at: entity.created_at,
         },
@@ -182,9 +182,9 @@ describe("Update Category Usecase Unit Test", () => {
     for (const i of arrange) {
       output = await useCase.execute({
         id: i.input.id,
-        ...("name" in i.input && { name: i.input.name }),
-        ...("description" in i.input && { description: i.input.description }),
-        ...("is_active" in i.input && { is_active: i.input.is_active }),
+        ...('name' in i.input && { name: i.input.name }),
+        ...('description' in i.input && { description: i.input.description }),
+        ...('is_active' in i.input && { is_active: i.input.is_active }),
       });
       expect(output).toStrictEqual({
         id: entity.category_id.id,
